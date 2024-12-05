@@ -1,6 +1,6 @@
 module Main (main) where
 
-import Day01Test (tests)
+import Day1Test (tests)
 import Test.HUnit
 import qualified System.Exit as Exit
 

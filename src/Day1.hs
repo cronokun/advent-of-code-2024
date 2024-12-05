@@ -1,6 +1,6 @@
 -- description: Day 1: Historian Hysteria
 
-module Day01 (part1, part2) where
+module Day1 (part1, part2) where
 
 import Data.List (sort)
 import qualified Data.Map as Map

@@ -1,6 +1,6 @@
-module Day01Test where
+module Day1Test where
 
-import Day01
+import Day1
 import Test.HUnit
 import System.IO.Unsafe (unsafePerformIO)
 
@@ -13,16 +13,16 @@ example = "3   4\n\
            \3   3"
 
 input :: String
-input = unsafePerformIO . readFile $ "inputs/01_locations_list"
+input = unsafePerformIO . readFile $ "inputs/1_locations_list"
 
 test1 :: Test
 test1 = TestCase (assertEqual
-                  "Day01.part1 returns total distance between lists"
+                  "Day1.part1 returns total distance between lists"
                    11 (part1 example))
 
 test2 :: Test
 test2 = TestCase (assertEqual
-                  "Day01.part2 returns lists similarity score"
+                  "Day1.part2 returns lists similarity score"
                   31 (part2 example))
 
 answer1 :: Test
