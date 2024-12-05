@@ -2,25 +2,37 @@ module Day01Test where
 
 import Day01
 import Test.HUnit
-import System.IO.Unsafe
+import System.IO.Unsafe (unsafePerformIO)
 
-input1 :: String
-input1 = "3   4\n\
-         \4   3\n\
-         \2   5\n\
-         \1   3\n\
-         \3   9\n\
-         \3   3"
+example :: String
+example = "3   4\n\
+           \4   3\n\
+           \2   5\n\
+           \1   3\n\
+           \3   9\n\
+           \3   3"
 
-input2 :: String
-input2 = unsafePerformIO . readFile $ "inputs/01_locations_list"
+input :: String
+input = unsafePerformIO . readFile $ "inputs/01_locations_list"
 
 test1 :: Test
-test1 = TestCase (assertEqual "Returns total distance between lists" 11 (part1 input1))
+test1 = TestCase (assertEqual
+                  "Day01.part1 returns total distance between lists"
+                   11 (part1 example))
+
+test2 :: Test
+test2 = TestCase (assertEqual
+                  "Day01.part2 returns lists similarity score"
+                  31 (part2 example))
 
 answer1 :: Test
-answer1 = TestCase (assertEqual "Answer part one" 2192892 (part1 input2))
+answer1 = TestCase (assertEqual "Answer for Day 1 part one" 2192892 (part1 input))
+
+answer2 :: Test
+answer2 = TestCase (assertEqual "Answer for Day 1 part two" 22962826 (part2 input))
 
 tests :: Test
-tests = TestList [TestLabel "Day 1, part 1: example" test1,
-                  TestLabel "Day 1, part 1: answer" answer1]
+tests = TestList [TestLabel "Day 1, part 1 test example" test1,
+                  TestLabel "Day 1, part 2 test example" test2,
+                  TestLabel "Day 1, part 1 answer" answer1,
+                  TestLabel "Day 1, part 2 answer" answer2]
