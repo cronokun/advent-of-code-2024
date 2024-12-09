@@ -109,7 +109,7 @@ test-suite aoc2024-test
     default-language: GHC2024
 
     -- Modules included in this executable, other than Main.
-    other-modules: Day1Test, Day2Test
+    other-modules: Day1Spec, Day2Spec
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -121,10 +121,13 @@ test-suite aoc2024-test
     hs-source-dirs:   test
 
     -- The entrypoint to the test suite.
-    main-is:          Main.hs
+    main-is:          Spec.hs
 
     -- Test dependencies.
     build-depends:
         base ^>=4.20.0.0,
         HUnit ^>=1.6,
+        hspec ^>=2.11,
         aoc2024
+    build-tool-depends:
+      hspec-discover:hspec-discover ^>=2.11
