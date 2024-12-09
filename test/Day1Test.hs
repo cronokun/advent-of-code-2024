@@ -30,9 +30,3 @@ answer1 = TestCase (assertEqual "Answer for Day 1 part one" 2192892 (part1 input
 
 answer2 :: Test
 answer2 = TestCase (assertEqual "Answer for Day 1 part two" 22962826 (part2 input))
-
-tests :: Test
-tests = TestList [TestLabel "Day 1, part 1 test example" test1,
-                  TestLabel "Day 1, part 2 test example" test2,
-                  TestLabel "Day 1, part 1 answer" answer1,
-                  TestLabel "Day 1, part 2 answer" answer2]
