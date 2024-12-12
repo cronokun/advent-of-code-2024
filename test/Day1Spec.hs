@@ -1,11 +1,11 @@
 module Day1Spec (spec) where
 
-import Test.Hspec
 import Day1
-import System.IO.Unsafe (unsafePerformIO)
+import Test.Hspec
+import SpecHelper
 
-sample :: String
-sample = "3   4\n\
+example1 :: String
+example1 = "3   4\n\
            \4   3\n\
            \2   5\n\
            \1   3\n\
@@ -13,17 +13,17 @@ sample = "3   4\n\
            \3   3"
 
 input :: String
-input = unsafePerformIO . readFile $ "inputs/1_locations_list"
+input = readFile' "inputs/1_locations_list"
 
 spec :: Spec
 spec = do
   describe "part1" $ do
     it "returns total distance between lists" $ do
-      shouldBe 11 (part1 sample)
+      shouldBe 11 (part1 example1)
 
   describe "part2" $ do
     it "returns total distance between lists" $ do
-      shouldBe 31 (part2 sample)
+      shouldBe 31 (part2 example1)
 
   describe "answers" $ do
     it "for part 1" $ do

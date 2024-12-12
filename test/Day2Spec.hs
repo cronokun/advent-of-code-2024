@@ -1,8 +1,8 @@
 module Day2Spec (spec) where
 
-import Test.Hspec
 import Day2
-import System.IO.Unsafe (unsafePerformIO)
+import Test.Hspec
+import SpecHelper
 
 sample :: String
 sample = "7 6 4 2 1\n\
@@ -13,7 +13,7 @@ sample = "7 6 4 2 1\n\
            \1 3 6 7 9"
 
 input :: String
-input = unsafePerformIO . readFile $ "inputs/2_unusual_data"
+input = readFile' "inputs/2_unusual_data"
 
 spec :: Spec
 spec = do

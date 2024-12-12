@@ -2,10 +2,10 @@ module Day3Spec (spec) where
 
 import Day3
 import Test.Hspec
-import System.IO.Unsafe (unsafePerformIO)
+import SpecHelper
 
 input :: String
-input = unsafePerformIO . readFile $ "inputs/3_corrupted_memory"
+input = readFile' "inputs/3_corrupted_memory"
 
 example1 :: String
 example1 = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
