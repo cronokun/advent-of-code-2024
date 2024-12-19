@@ -20,7 +20,7 @@ name:               adventofcode2024
 -- PVP summary:     +-+------- breaking API changes
 --                  | | +----- non-breaking API additions
 --                  | | | +--- code changes with no API change
-version:            0.2.3.0
+version:            0.5.1.0
 
 -- A short (one-line) description of the package.
 -- synopsis:
@@ -58,7 +58,7 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  Day1, Day2, Day3, Day4
+    exposed-modules:  Day1, Day2, Day3, Day4, Day5
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -109,7 +109,7 @@ test-suite adventofcode-test
     default-language: GHC2024
 
     -- Modules included in this executable, other than Main.
-    other-modules: SpecHelper, Day1Spec, Day2Spec, Day3Spec, Day4Spec
+    other-modules: SpecHelper, Day1Spec, Day2Spec, Day3Spec, Day4Spec, Day5Spec
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
