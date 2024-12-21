@@ -6,14 +6,14 @@ import Data.List (intersect, transpose)
 
 countDia1 :: [String] -> Integer
 countDia1 input =
-  let input' = diagonalTranspose input
+  let input' = diagonalTranspose dindex1 input
       input'' = map reverse input'
    in doCount input' + doCount input''
 
 
 countDia2 :: [String] -> Integer
 countDia2 input =
-  let input' = diagonalTranspose . transpose . reverse $ input
+  let input' = diagonalTranspose dindex2 input
       input'' = map reverse input'
    in doCount input' + doCount input''
 
@@ -36,23 +36,32 @@ doCount lst = foldr (\l t -> t + count' 0 l) 0 lst
     count' acc ('X':'M':'A':'S':rest) = count' (acc + 1) rest
     count' acc (_:rest) = count' acc rest
 
-diagonalTranspose :: [String] -> [String]
-diagonalTranspose lst =
+diagonalTranspose :: (Int -> Int -> Int) -> [String] -> [String]
+diagonalTranspose f lst =
   let chars = concat lst
       len = length lst
       acc = replicate (len * 2 - 1) ""
-   in diagonalize 0 acc len chars
+   in diagonalize 0 acc len f chars
   where
-    diagonalize _ acc _ "" = map reverse acc
-    diagonalize n acc len (x:xs) =
-        let idx = n `div` len + n `rem` len
+    diagonalize _ acc _ _ "" = map reverse acc
+    diagonalize n acc len f (x:xs) =
+        let idx = f n len
             acc' =  prependAt idx x acc
-         in diagonalize (n + 1) acc' len xs
+         in diagonalize (n + 1) acc' len f xs
 
     prependAt i el list =
       let (head', (row:tail')) = splitAt i list
           row' = [el:row]
        in concat [head', row', tail']
+
+dindex1 :: Int -> Int -> Int
+dindex1 n len =  n `div` len + n `rem` len
+
+dindex2 :: Int -> Int -> Int
+dindex2 n len =
+  let k = n `div` len
+      m = n `rem` len
+   in (len - 1 + k) - m
 
 part1 :: String -> Integer
 part1 input =
@@ -63,8 +72,8 @@ part2 :: String -> Integer
 part2 input =
   let input' = lines input
       len = length input'
-      dia1 = diagonalTranspose input'
-      dia2 = otherDiagonalTranspose input'
+      dia1 = diagonalTranspose dindex1 input'
+      dia2 = diagonalTranspose dindex2 input'
       as = map (diaToN1 len) $ allAs dia1
       bs = map (diaToN2 len) $ allAs dia2
   in countIndexMatches as bs
@@ -78,9 +87,6 @@ part2 input =
 
     countIndexMatches :: [Int] -> [Int] -> Integer
     countIndexMatches as bs = toInteger . length $ intersect as bs
-
-    otherDiagonalTranspose :: [String] -> [String]
-    otherDiagonalTranspose i = map reverse $ diagonalTranspose (transpose $ map reverse i)
 
     scanForIndexes :: String -> [Int]
     scanForIndexes str = helper 0 [] str
