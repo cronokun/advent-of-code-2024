@@ -43,6 +43,13 @@ spec = do
     it "returns sum of middle numbers of correctly-ordered updates" $ do
       shouldBe 143 (part1 example1)
 
+  describe "part2" $ do
+    it "returns sum of middle numbers of corrected updates" $ do
+      shouldBe 123 (part2 example1)
+
   describe "answers" $ do
     it "for part 1" $ do
       shouldBe 5108 (part1 input)
+
+    it "for part 2" $ do
+      shouldBe 7380 (part2 input)
