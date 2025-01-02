@@ -1,4 +1,4 @@
-module Helpers where
+module Helpers (inspect) where
 
 import Debug.Trace (trace)
 
