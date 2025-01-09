@@ -24,6 +24,14 @@ spec = do
     it "returns total calibration result" $ do
       shouldBe (part1 example1) 3749
 
+  describe "part2" $ do
+    it "returns total calibration result with additional operation" $ do
+      shouldBe (part2 example1) 11387
+
   describe "answers" $ do
     it "for part 1" $ do
       shouldBe (part1 input) 12553187650171
+
+  describe "answers" $ do
+    it "for part 2" $ do
+      shouldBe (part2 input) 96779702119491
