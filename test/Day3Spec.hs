@@ -17,15 +17,15 @@ spec :: Spec
 spec = do
   describe "part1" $ do
     it "returns sum of all multiplications" $ do
-      shouldBe 161 (part1 example1)
+      shouldBe (part1 example1) 161
 
   describe "part2" $ do
     it "returns sum of only enabled multiplications" $ do
-      shouldBe 48 (part2 example2)
+      shouldBe (part2 example2) 48
 
   describe "answers" $ do
     it "for part 1" $ do
-      shouldBe 170807108 (part1 input)
+      shouldBe (part1 input) 170807108
 
     it "for part 2" $ do
-      shouldBe 74838033 (part2 input)
+      shouldBe (part2 input) 74838033

@@ -23,15 +23,15 @@ spec :: Spec
 spec = do
   describe "part1" $ do
     it "returns number of times XMAS appear" $ do
-      shouldBe 18 (part1 example1)
+      shouldBe (part1 example1) 18
 
   describe "part2" $ do
     it "returns number of times X-MAS appear" $ do
-      shouldBe  9 (part2 example1)
+      shouldBe  (part2 example1) 9
 
   describe "answers" $ do
     it "for part 1" $ do
-      shouldBe 2434 (part1 input)
+      shouldBe (part1 input) 2434
 
     it "for part 2" $ do
-      shouldBe 1835 (part2 input)
+      shouldBe (part2 input) 1835

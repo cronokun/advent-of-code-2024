@@ -41,15 +41,15 @@ spec :: Spec
 spec = do
   describe "part1" $ do
     it "returns sum of middle numbers of correctly-ordered updates" $ do
-      shouldBe 143 (part1 example1)
+      shouldBe (part1 example1) 143
 
   describe "part2" $ do
     it "returns sum of middle numbers of corrected updates" $ do
-      shouldBe 123 (part2 example1)
+      shouldBe (part2 example1) 123
 
   describe "answers" $ do
     it "for part 1" $ do
-      shouldBe 5108 (part1 input)
+      shouldBe (part1 input) 5108
 
     it "for part 2" $ do
-      shouldBe 7380 (part2 input)
+      shouldBe (part2 input) 7380

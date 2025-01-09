@@ -19,15 +19,15 @@ spec :: Spec
 spec = do
   describe "part1" $ do
     it "returns total distance between lists" $ do
-      shouldBe 11 (part1 example1)
+      shouldBe (part1 example1) 11
 
   describe "part2" $ do
     it "returns total distance between lists" $ do
-      shouldBe 31 (part2 example1)
+      shouldBe (part2 example1) 31
 
   describe "answers" $ do
     it "for part 1" $ do
-      shouldBe 2192892 (part1 input)
+      shouldBe (part1 input) 2192892
 
     it "for part 2" $ do
-      shouldBe 22962826 (part2 input)
+      shouldBe (part2 input) 22962826

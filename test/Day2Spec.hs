@@ -19,15 +19,15 @@ spec :: Spec
 spec = do
   describe "part1" $ do
     it "returns number of safe reports" $ do
-      shouldBe 2 (part1 sample)
+      shouldBe (part1 sample) 2
 
   describe "part2" $ do
     it "returns number of safe reports with one-off tolerance" $ do
-      shouldBe 4 (part2 sample)
+      shouldBe (part2 sample) 4
 
   describe "answers" $ do
     it "for part 1" $ do
-      shouldBe 663 (part1 input)
+      shouldBe (part1 input) 663
 
     it "for part 2" $ do
-      shouldBe 692 (part2 input)
+      shouldBe (part2 input) 692
