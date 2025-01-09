@@ -2,6 +2,7 @@
 module Day5 (part1, part2) where
 
 import qualified Data.Map as Map
+import Helpers (splitOn)
 
 parse :: String -> (Map.Map Integer [Integer], [[Integer]])
 parse input = helper [] [] (lines input)
@@ -21,15 +22,6 @@ parse input = helper [] [] (lines input)
     parseRule rule = let [a, b] = splitOn '|' rule in (readInt a, readInt b)
     parsePages ns  = map (readInt) $ splitOn ',' ns
     readInt n = read n :: Integer
-
-splitOn :: Char -> String -> [String]
-splitOn p str = doSplit [] [] p str
-  where
-    doSplit as acc _ "" = reverse ((reverse as) : acc)
-    doSplit as acc p (x:xs)
-      | p == x = doSplit [] ((reverse as) : acc) p xs
-      | otherwise = doSplit (x:as) acc p xs
-
 
 middleElem :: [Integer] -> Integer
 middleElem lst =
