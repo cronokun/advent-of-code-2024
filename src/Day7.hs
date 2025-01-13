@@ -24,13 +24,14 @@ sumCorrect ops calibrations = sum . map fst . filter isCorrect $ calibrations
     -- Check if an equations is correct, i.e. returns expected result.
     isCorrect (expected, nums) =
       let Just (n,ns) = uncons nums
-      in any (== expected) (calcResults [n] ns)
+      in any (== expected) (calcResults expected [n] ns)
 
     -- Return result of calculation with all variants of the given operations.
-    calcResults acc [] = acc
-    calcResults acc (n:ns) =
-      let acc' = concat $ map (applyOpToAll n acc) ops
-       in calcResults acc' ns
+    calcResults expected acc [] = acc
+    calcResults expected acc (n:ns) =
+      let acc' = concatMap (applyOpToAll n acc) ops
+          acc'' = filter (<= expected) acc' -- filter out values that already incorrect
+       in calcResults expected acc'' ns
 
     applyOpToAll n ms op = map (\m -> op m n) ms
 
