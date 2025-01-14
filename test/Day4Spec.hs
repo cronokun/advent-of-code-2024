@@ -2,7 +2,6 @@ module Day4Spec (spec) where
 
 import Day4
 import Test.Hspec
-import SpecHelper
 
 example1 :: String
 example1 = "MMMSXXMASM\n\
@@ -16,9 +15,6 @@ example1 = "MMMSXXMASM\n\
            \MAMMMXMMMM\n\
            \MXMXAXMASX"
 
-input :: String
-input = readFile' "inputs/4_word_search"
-
 spec :: Spec
 spec = do
   describe "part1" $ do
@@ -31,7 +27,9 @@ spec = do
 
   describe "answers" $ do
     it "for part 1" $ do
+      input <- readFile "inputs/4_word_search"
       shouldBe (part1 input) 2434
 
     it "for part 2" $ do
+      input <- readFile "inputs/4_word_search"
       shouldBe (part2 input) 1835

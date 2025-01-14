@@ -2,7 +2,6 @@ module Day7Spec (spec) where
 
 import Day7
 import Test.Hspec
-import SpecHelper
 
 example1 :: String
 example1 = "190: 10 19\n\
@@ -14,9 +13,6 @@ example1 = "190: 10 19\n\
            \192: 17 8 14\n\
            \21037: 9 7 18 13\n\
            \292: 11 6 16 20"
-
-input :: String
-input = readFile' "inputs/7_calibration_equations"
 
 spec :: Spec
 spec = do
@@ -30,8 +26,9 @@ spec = do
 
   describe "answers" $ do
     it "for part 1" $ do
+      input <- readFile "inputs/7_calibration_equations"
       shouldBe (part1 input) 12553187650171
 
-  describe "answers" $ do
     it "for part 2" $ do
+      input <- readFile "inputs/7_calibration_equations"
       shouldBe (part2 input) 96779702119491

@@ -2,7 +2,6 @@ module Day6Spec (spec) where
 
 import Day6
 import Test.Hspec
-import SpecHelper
 
 example1 :: String
 example1 = "....#.....\n\
@@ -16,9 +15,6 @@ example1 = "....#.....\n\
            \#.........\n\
            \......#..."
 
-input :: String
-input = readFile' "inputs/6_obstacles_map"
-
 spec :: Spec
 spec = do
   describe "part1" $ do
@@ -31,6 +27,9 @@ spec = do
 
   describe "answers" $ do
     it "for part 1" $ do
+      input <- readFile "inputs/6_obstacles_map"
       shouldBe (part1 input) 5145
+
     it "for part 2" $ do
+      input <- readFile "inputs/6_obstacles_map"
       shouldBe (part2 input) 1523

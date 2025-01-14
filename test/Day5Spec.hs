@@ -2,7 +2,6 @@ module Day5Spec (spec) where
 
 import Day5
 import Test.Hspec
-import SpecHelper
 
 example1 :: String
 example1 = "47|53\n\
@@ -34,9 +33,6 @@ example1 = "47|53\n\
            \61,13,29\n\
            \97,13,75,29,47"
 
-input :: String
-input = readFile' "inputs/5_rules_and_pages"
-
 spec :: Spec
 spec = do
   describe "part1" $ do
@@ -49,7 +45,9 @@ spec = do
 
   describe "answers" $ do
     it "for part 1" $ do
+      input <- readFile "inputs/5_rules_and_pages"
       shouldBe (part1 input) 5108
 
     it "for part 2" $ do
+      input <- readFile "inputs/5_rules_and_pages"
       shouldBe (part2 input) 7380

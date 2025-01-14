@@ -2,7 +2,6 @@ module Day1Spec (spec) where
 
 import Day1
 import Test.Hspec
-import SpecHelper
 
 example1 :: String
 example1 = "3   4\n\
@@ -12,8 +11,6 @@ example1 = "3   4\n\
            \3   9\n\
            \3   3"
 
-input :: String
-input = readFile' "inputs/1_locations_list"
 
 spec :: Spec
 spec = do
@@ -27,7 +24,9 @@ spec = do
 
   describe "answers" $ do
     it "for part 1" $ do
+      input <- readFile "inputs/1_locations_list"
       shouldBe (part1 input) 2192892
 
     it "for part 2" $ do
+      input <- readFile "inputs/1_locations_list"
       shouldBe (part2 input) 22962826

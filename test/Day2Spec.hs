@@ -2,18 +2,15 @@ module Day2Spec (spec) where
 
 import Day2
 import Test.Hspec
-import SpecHelper
 
 sample :: String
 sample = "7 6 4 2 1\n\
-           \1 2 7 8 9\n\
-           \9 7 6 2 1\n\
-           \1 3 2 4 5\n\
-           \8 6 4 4 1\n\
-           \1 3 6 7 9"
+         \1 2 7 8 9\n\
+         \9 7 6 2 1\n\
+         \1 3 2 4 5\n\
+         \8 6 4 4 1\n\
+         \1 3 6 7 9"
 
-input :: String
-input = readFile' "inputs/2_unusual_data"
 
 spec :: Spec
 spec = do
@@ -27,7 +24,9 @@ spec = do
 
   describe "answers" $ do
     it "for part 1" $ do
+      input <- readFile "inputs/2_unusual_data"
       shouldBe (part1 input) 663
 
     it "for part 2" $ do
+      input <- readFile "inputs/2_unusual_data"
       shouldBe (part2 input) 692
