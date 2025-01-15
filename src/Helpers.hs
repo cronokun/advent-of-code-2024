@@ -3,7 +3,7 @@ module Helpers (inspect, splitOn) where
 import Debug.Trace (trace)
 
 inspect :: Show a => String -> a -> a
-inspect msg res = trace ("\n" ++ msg ++ ": " ++ show res) res
+inspect msg res = trace (msg ++ ": " ++ show res) res
 
 -- Split a string into two on the specified char
 splitOn :: Char -> String -> [String]
