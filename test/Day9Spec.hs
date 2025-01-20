@@ -12,7 +12,15 @@ spec = do
     it "returns compressed filesystem checksum" $ do
       shouldBe (part1 example1) 1928 
 
+  describe "part2" $ do
+    it "returns checksum for compressed filesystem v2.0" $ do
+      shouldBe (part2 example1) 2858
+
   describe "answers" $ do
     it "for part 1" $ do
       input <- readFile "inputs/9_disk_map"
       shouldBe (part1 input) 6262891638328
+
+    it "for part 2" $ do
+      input <- readFile "inputs/9_disk_map"
+      shouldBe (part2 input) 6287317016845
