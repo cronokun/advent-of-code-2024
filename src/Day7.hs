@@ -13,10 +13,14 @@ part1 input = sumCorrect [(+), (*)] $ parse input
 
 -- Total calibration result with three operations: (+), (*), and (||).
 part2 :: String -> Integer
-part2 input = sumCorrect [(+), (*), concatenate] $ parse input
+part2 input = sumCorrect [(+), (*), concat'] $ parse input
   where
-    concatenate :: Integer -> Integer -> Integer
-    concatenate a b = read (show a <> show b) :: Integer
+    concat' :: Integer -> Integer -> Integer
+    concat' x y = foldl' (\acc d -> acc * 10 + d) x (reverse $ digits y)
+      where
+        digits :: Integer -> [Integer]
+        digits 0 = []
+        digits n = (n `mod` 10) : digits (n `div` 10)
 
 sumCorrect :: [Operation] -> [Calibration] -> Integer
 sumCorrect ops calibrations = sum . map fst . filter isCorrect $ calibrations
