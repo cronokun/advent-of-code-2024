@@ -9,7 +9,7 @@ type Block = (BMode, Integer, Integer, Integer)
 -- Returns compressed filesystem checksum
 part1 :: String -> Integer
 part1 input =
-  let str = parse input
+  let str = init input
       blocks = mapToBlocks str
       spaces = totalSpace blocks
    in checksum $ compact1 spaces blocks
@@ -25,7 +25,7 @@ part1 input =
 
 -- Returns checksum for compressed filesystem v2.0
 part2 :: String -> Integer
-part2 input = checksum . compact2 . mapToBlocks . parse $ input
+part2 input = checksum . compact2 . mapToBlocks $ init input
   where
     checksum :: [Block] -> Integer
     checksum = sum . map blkChecksum
@@ -118,6 +118,3 @@ mapToBlocks str = helper [] 0 0 FB str
 
     charToInt :: Char -> Integer
     charToInt n = read [n] :: Integer
-
-parse :: String -> String
-parse input = head $ lines input -- FIXME: better way to trim trailing "\n"?!
