@@ -4,36 +4,36 @@ module Day9 (part1, part2) where
 import Data.List (partition, sortOn)
 
 data BMode = FB | SB deriving (Eq, Show)
-type Block = (BMode, Integer, Integer, Integer)
+type Block = (BMode, Int, Int, Int)
 
 -- Returns compressed filesystem checksum
-part1 :: String -> Integer
+part1 :: String -> Int
 part1 input =
   let str = init input
       blocks = mapToBlocks str
       spaces = totalSpace blocks
    in checksum $ compact1 spaces blocks
   where
-    checksum :: [Integer] -> Integer
-    checksum = toInteger . sum . map (uncurry (*)) . zip [0..]
+    checksum :: [Int] -> Int
+    checksum = sum . map (uncurry (*)) . zip [0..]
 
-    totalSpace :: [Block] -> Integer
+    totalSpace :: [Block] -> Int
     totalSpace = sum . map getLen . filter isSpace
       where
         getLen (_, _, _, n) = n
         isSpace (t, _, _, _) = t == SB
 
 -- Returns checksum for compressed filesystem v2.0
-part2 :: String -> Integer
+part2 :: String -> Int
 part2 input = checksum . compact2 . mapToBlocks $ init input
   where
-    checksum :: [Block] -> Integer
+    checksum :: [Block] -> Int
     checksum = sum . map blkChecksum
       where
         blkChecksum (FB, i, inx, n) = sum $ map (* i) [inx..(inx + n - 1)]
 
 -- Moves file blocks from the right to free blocks on the left.
-compact1 :: Integer -> [Block] -> [Integer]
+compact1 :: Int -> [Block] -> [Int]
 compact1 spaces blks = helper [] spaces blks (reverse blks)
   where
     helper acc 0 _ fs = reverse $ addFills acc fs
@@ -98,7 +98,7 @@ compact2 blks =
 mapToBlocks :: String -> [Block]
 mapToBlocks str = helper [] 0 0 FB str
   where
-    helper :: [Block] -> Integer -> Integer -> BMode -> String -> [Block]
+    helper :: [Block] -> Int -> Int -> BMode -> String -> [Block]
     helper acc _ _ _ [] = reverse acc
     -- Ignore zero-length blocks
     helper acc bid idx FB ('0':xs) = helper acc (bid + 1) idx SB xs
@@ -116,5 +116,5 @@ mapToBlocks str = helper [] 0 0 FB str
           blk = (SB, 0, idx, n)
       in helper (blk:acc) bid (idx + n) FB xs
 
-    charToInt :: Char -> Integer
-    charToInt n = read [n] :: Integer
+    charToInt :: Char -> Int
+    charToInt n = read [n] :: Int

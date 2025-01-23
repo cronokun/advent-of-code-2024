@@ -6,9 +6,9 @@ import Data.Set (Set)
 import qualified Data.Map as Map
 import qualified Data.Set as Set
 
-type Coord = (Integer, Integer)
-type Move = (Dir, Integer, (Integer, Integer))
-type ObsMap = Map.Map Integer [Integer]
+type Coord = (Int, Int)
+type Move = (Dir, Int, (Int, Int))
+type ObsMap = Map.Map Int [Int]
 data Dir = MDown | MLeft | MRight | MUp deriving (Eq, Show)
 
 part1 :: String -> Int
@@ -55,7 +55,7 @@ move MDown (x, y) (cols, _) =
         [y'] -> Just (x, y' - 1)
         _ -> Nothing
 
-nextObs :: (Integer -> Bool) -> [Integer] -> [Integer]
+nextObs :: (Int -> Bool) -> [Int] -> [Int]
 nextObs fun obs = take 1 $ filter fun obs
 
 obstaclesInCol :: Ord k => k -> Map.Map k [a] -> [a]

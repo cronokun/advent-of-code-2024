@@ -1,8 +1,13 @@
--- description: Day 3: Mull It Over
-
+-- Day 3: Mull It Over
 module Day3 (part1, part2) where
 
-type Pair = (Integer, Integer)
+type Pair = (Int, Int)
+
+part1 :: String -> Int
+part1 input = addUpMultiplications $ parse input
+
+part2 :: String -> Int
+part2 input = addUpMultiplications $ parseEnabled input
 
 parsePair :: String -> Either String (Pair, String)
 parsePair str =
@@ -13,13 +18,13 @@ parsePair str =
         Left rest' -> Left rest'
         Right (b, rest'') -> Right ((a, b), rest'')
 
-parseNum :: String -> Either String (Integer, String)
+parseNum :: String -> Either String (Int, String)
 parseNum = parseNum' ""
   where
     parseNum' acc (x:rest)
       | x `elem` ['0'..'9'] = parseNum' (x:acc) rest
       | x `elem` [',', ')'] =
-        let num = (read . reverse $ acc :: Integer)
+        let num = (read . reverse $ acc :: Int)
          in Right (num, rest)
       | otherwise = Left rest
 
@@ -53,11 +58,5 @@ parseEnabled input = parse' True [] input
         Left rest  -> parse' True acc rest
         Right (pair, rest) -> parse' True (pair : acc) rest
 
-addUpMultiplications :: [Pair] -> Integer
+addUpMultiplications :: [Pair] -> Int
 addUpMultiplications pairs = foldr (+) 0 . map (uncurry (*)) $ pairs
-
-part1 :: String -> Integer
-part1 input = addUpMultiplications $ parse input
-
-part2 :: String -> Integer
-part2 input = addUpMultiplications $ parseEnabled input

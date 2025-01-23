@@ -1,10 +1,23 @@
--- description: Day 5: Print Queue
+-- Day 5: Print Queue
 module Day5 (part1, part2) where
 
 import qualified Data.Map as Map
 import Helpers (splitOn)
 
-parse :: String -> (Map.Map Integer [Integer], [[Integer]])
+part1 :: String -> Int
+part1 input =
+  let (rules, updates) = parse input
+      correctUpdates = filter (\xs -> isCorrect rules xs) updates
+   in middleSumOf correctUpdates 
+
+part2 :: String -> Int
+part2 input =
+  let (rules, updates) = parse input
+      notCorrectUpdates = filter (\xs -> not $ isCorrect rules xs) updates
+      correctedUpdates = map (doCorrect rules) notCorrectUpdates
+   in middleSumOf correctedUpdates
+
+parse :: String -> (Map.Map Int [Int], [[Int]])
 parse input = helper [] [] (lines input)
   where
     -- parse rules
@@ -21,17 +34,17 @@ parse input = helper [] [] (lines input)
 
     parseRule rule = let [a, b] = splitOn '|' rule in (readInt a, readInt b)
     parsePages ns  = map (readInt) $ splitOn ',' ns
-    readInt n = read n :: Integer
+    readInt n = read n :: Int
 
-middleElem :: [Integer] -> Integer
+middleElem :: [Int] -> Int
 middleElem lst =
   let idx = div (length lst) 2
    in lst !! idx
 
-middleSumOf :: [[Integer]] -> Integer
+middleSumOf :: [[Int]] -> Int
 middleSumOf = sum . map middleElem
 
-isCorrect :: (Map.Map Integer [Integer]) -> [Integer] -> Bool
+isCorrect :: (Map.Map Int [Int]) -> [Int] -> Bool
 isCorrect rules xs =
   let pairs = zip xs (tail xs)
    in all (isCorrectPair rules) pairs
@@ -53,17 +66,3 @@ doCorrect rules xs = fixer [] xs
       case isCorrect rules lst of
         True -> lst
         False -> doCorrect rules lst
-
-part1 :: String -> Integer
-part1 input =
-  let (rules, updates) = parse input
-      correctUpdates = filter (\xs -> isCorrect rules xs) updates
-   in middleSumOf correctUpdates 
-
-part2 :: String -> Integer
-part2 input =
-  let (rules, updates) = parse input
-      notCorrectUpdates = filter (\xs -> not $ isCorrect rules xs) updates
-      correctedUpdates = map (doCorrect rules) notCorrectUpdates
-   in middleSumOf correctedUpdates
-

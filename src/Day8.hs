@@ -4,19 +4,19 @@ module Day8 (part1, part2) where
 import qualified Data.List as List
 import qualified Data.Set as Set
 
-type Coord = (Integer, Integer)
+type Coord = (Int, Int)
 
 -- Part 1: How many unique locations within the bounds of the map contain an antinode?
-part1 :: String -> Integer
+part1 :: String -> Int
 part1 input =
   let (m, size) = parse input
-   in toInteger $ calcAntinodes antinodes size m
+   in calcAntinodes antinodes size m
 
 -- Part 2: How many unique locations within the bounds of the map contain an harmonic antinode?
-part2 :: String -> Integer
+part2 :: String -> Int
 part2 input =
   let (m, size) = parse input
-   in toInteger $ calcAntinodes antinodes' size m
+   in calcAntinodes antinodes' size m
 
 -- Return two or less antinodes for two given antennas.
 antinodes :: Coord -> [Coord] -> [Coord]
