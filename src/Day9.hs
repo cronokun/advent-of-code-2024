@@ -2,6 +2,7 @@
 module Day9 (part1, part2) where
 
 import Data.List (partition, sortOn)
+import Helpers (charToInt)
 
 data BMode = FB | SB deriving (Eq, Show)
 type Block = (BMode, Int, Int, Int)
@@ -115,6 +116,3 @@ mapToBlocks str = helper [] 0 0 FB str
       let n = charToInt x
           blk = (SB, 0, idx, n)
       in helper (blk:acc) bid (idx + n) FB xs
-
-    charToInt :: Char -> Int
-    charToInt n = read [n] :: Int
