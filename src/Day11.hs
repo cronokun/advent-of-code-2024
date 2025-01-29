@@ -4,8 +4,6 @@ module Day11 (part1, part2) where
 import qualified Data.List as List
 import qualified Data.Map as Map
 
-type Memo = Map.Map Int Int
-
 -- How many stones will you have after blinking 25 times?
 part1 :: String -> Int
 part1 input = length . process 25 . parse $ input
@@ -27,7 +25,7 @@ process c nums = process (c - 1) $ helper [] nums
       else helper ((x * 2024) : acc) xs
 
 process' :: [(Int, Int, Int)] -> Int
-process' xs = helper 0 xs
+process' = helper 0
   where
     helper :: Int -> [(Int, Int, Int)] -> Int
     helper acc [] = acc
@@ -47,50 +45,7 @@ process' xs = helper 0 xs
     sumCounts = (\(_, _, k) total -> total + k)
     splitByDone = List.partition (\(_, n, _) -> n == 0)
 
-    -- Fast split common numbers:
     split :: (Int, Int, Int) -> [(Int, Int, Int)]
-    split (0, n, k) | n >= 4 =
-      let m = n - 4
-       in [(0, m, k), (2, m, 2 * k), (4, m, k)]
-
-    split (1, n, k) | n >= 3 =
-      let m = n - 3
-       in [(0, m, k), (2, m, 2 * k), (4, m, k)]
-
-    split (2, n, k) | n >= 3 =
-      let m = n - 3
-      in [(0, m, k), (4, m, 2 * k), (8, m, k)]
-
-    split (3, n, k) | n >= 3 =
-      let m = n - 3
-      in [(0, m, k), (2, m, k), (6, m, k), (7, m, k)]
-
-    split (4, n, k) | n >= 3 =
-      let m = n - 3
-      in [(0, m, k), (6, m, k), (8, m, k), (9, m, k)]
-
-    split (5, n, k) | n >= 5 =
-      let m = n - 5
-      in [(0, m, 2 * k), (2, m, 2 * k), (4, m, k), (8, m, 3 * k)]
-
-    split (6, n, k) | n >= 5 =
-      let m = n - 5
-      in [(2, m, k), (4, m, 2 * k), (5, m, 2 * k), (6, m, k), (7, m, k), (9, m, k)]
-
-    split (7, n, k) | n >= 5 =
-      let m = n - 5
-      in [(0, m, k), (2, m, 2 * k), (3, m, k), (6, m, 2 * k), (7, m, k), (8, m, k)]
-
-    split (8, n, k) | n >= 5 =
-      let m  = n - 5
-          m' = n - 4
-       in [(2, m, 2 * k), (3, m, k), (6, m, k), (7, m, 2 * k), (8, m', k)]
-
-    split (9, n, k) | n >= 5 =
-      let m = n - 5
-       in [(1, m, k), (3, m, k), (4, m, k), (6, m, 2 * k), (8, m, 2 * k), (9, m, k)]
-
-    -- Generic split:
     split (0, n, k) = [(1, n - 1, k)]
     split (x, n, k)
       | hasEvenDigits x = 
