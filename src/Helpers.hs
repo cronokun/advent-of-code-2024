@@ -1,11 +1,11 @@
-module Helpers (charToInt, inspect, splitOn) where
+module Helpers (charToInt, inspect, lineGroups, splitOn) where
 
 import Debug.Trace (trace)
 
 inspect :: Show a => String -> a -> a
 inspect msg res = trace (msg ++ ": " ++ show res) res
 
--- Split a string into two on the specified char
+-- Split a string into two on the specified char.
 splitOn :: Char -> String -> [String]
 splitOn p str = doSplit [] [] str
   where
@@ -13,6 +13,15 @@ splitOn p str = doSplit [] [] str
     doSplit as acc (x:xs)
       | p == x = doSplit [] ((reverse as) : acc) xs
       | otherwise = doSplit (x:as) acc xs
+
+-- Split a string into groups of strings.
+lineGroups :: String -> [[String]]
+lineGroups str = groupsFrom [] [] $ lines str
+  where
+    groupsFrom as acc [] = reverse ((reverse as) : acc)
+    groupsFrom as acc (x:xs)
+      | x == "" = groupsFrom [] ((reverse as) : acc) xs
+      | otherwise = groupsFrom (x:as) acc xs
 
 -- Parse a single digit.
 charToInt :: Char -> Int
