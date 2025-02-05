@@ -27,7 +27,15 @@ spec = do
     it "returns fewest tokens needed to win all possible prizes" $ do
       (part1 example) `shouldBe` 480
 
+  describe "part2" $ do
+    it "returns fewest tokens needed to win all possible prizes after unit conversion" $ do
+      (part2 example) `shouldBe` 875318608908
+
   describe "answers" $ do
     it "for part 1" $ do
       input <- readFile "inputs/13_machines"
       (part1 input) `shouldBe` 39748
+
+    it "for part 2" $ do
+      input <- readFile "inputs/13_machines"
+      (part2 input) `shouldBe` 74478585072604
