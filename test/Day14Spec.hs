@@ -27,3 +27,7 @@ spec = do
     it "for part 1" $ do
       input <- readFile "inputs/14_robot_records"
       (part1 (101, 103) input) `shouldBe` 232589280
+
+    it "for part 2" $ do
+      input <- readFile "inputs/14_robot_records"
+      (part2 (101, 103) input) `shouldBe` 7569
