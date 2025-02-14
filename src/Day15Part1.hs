@@ -1,5 +1,5 @@
--- Day 15: Warehouse Woes
-module Day15 (part1) where
+-- Day 15, part1: Warehouse Woes
+module Day15Part1 (part1) where
 
 import Data.List (find, partition, sort, sortBy)
 import Helpers (lineGroups)
@@ -12,6 +12,7 @@ data Grid = Grid { robot :: Coord
 data Move = MoveUp | MoveDown | MoveLeft | MoveRight deriving (Eq, Show)
 type Coord = (Int, Int)
 
+-- Returns sum of all boxes' GPS coordinates.
 part1 :: String -> Int
 part1 input =
   let (grid, moves) =parse input
@@ -22,10 +23,10 @@ part1 input =
    gpsCoord (x, y) = x + y * 100
 
 doMoves :: Grid -> [Move] -> Grid
-doMoves grid moves = foldl move grid $ zip [0..] moves
+doMoves grid moves = foldl move grid moves
   where
-    move :: Grid -> (Int, Move) -> Grid
-    move grd (_, dir) =
+    move :: Grid -> Move -> Grid
+    move grd dir =
       let pos = robot grd
           pos' = moveInDir dir pos
           isBox = pos' `elem` boxes grd
