@@ -20,7 +20,7 @@ name:               adventofcode2024
 -- PVP summary:     +-+------- breaking API changes
 --                  | | +----- non-breaking API additions
 --                  | | | +--- code changes with no API change
-version:            0.15.2.0
+version:            0.16.1.0
 
 -- A short (one-line) description of the package.
 -- synopsis:
@@ -74,6 +74,7 @@ library
                     , Day14
                     , Day15Part1
                     , Day15Part2
+                    , Day16
 
     -- Modules included in this library but not exported.
     other-modules: Helpers
@@ -84,7 +85,8 @@ library
     -- Other library packages from which modules are imported.
     build-depends:
         base ^>=4.20.0.0,
-        containers ^>=0.7
+        containers ^>=0.7,
+        heaps ^>=0.4.1
 
     -- Directories containing source files.
     hs-source-dirs:   src
@@ -139,6 +141,7 @@ test-suite adventofcode-test
                     , Day13Spec
                     , Day14Spec
                     , Day15Spec
+                    , Day16Spec
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
