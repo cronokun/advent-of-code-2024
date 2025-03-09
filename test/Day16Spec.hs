@@ -1,6 +1,7 @@
 module Day16Spec (spec) where
 
-import Day16
+import Day16Part1
+import Day16Part2
 import Test.Hspec
 
 example1, example2 :: String
@@ -48,7 +49,16 @@ spec = do
       (part1 example1) `shouldBe` 7036
       (part1 example2) `shouldBe` 11048
 
+  describe "part2" $ do
+    it "returns number of tiles on the all mix pathes" $ do
+      (part2 example1) `shouldBe` 45
+      (part2 example2) `shouldBe` 64
+
   describe "answers" $ do
     it "for part 1" $ do
       input <- readFile "inputs/16_maze_map"
       (part1 input) `shouldBe` 143580
+
+    it "for part 2" $ do
+      input <- readFile "inputs/16_maze_map"
+      (part2 input) `shouldBe` 645
