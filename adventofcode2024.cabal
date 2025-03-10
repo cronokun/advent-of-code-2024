@@ -20,7 +20,7 @@ name:               adventofcode2024
 -- PVP summary:     +-+------- breaking API changes
 --                  | | +----- non-breaking API additions
 --                  | | | +--- code changes with no API change
-version:            0.16.2.1
+version:            0.17.1.0
 
 -- A short (one-line) description of the package.
 -- synopsis:
@@ -76,6 +76,7 @@ library
                     , Day15Part2
                     , Day16Part1
                     , Day16Part2
+                    , Day17
 
     -- Modules included in this library but not exported.
     other-modules: Helpers
@@ -143,6 +144,7 @@ test-suite adventofcode-test
                     , Day14Spec
                     , Day15Spec
                     , Day16Spec
+                    , Day17Spec
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
