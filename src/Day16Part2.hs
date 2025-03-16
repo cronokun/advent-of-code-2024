@@ -1,7 +1,7 @@
 -- Day 16, part 2: Reindeer Maze
 module Day16Part2 (part2) where
 
-import Data.Heap (Heap)
+import Data.Heap (Heap, Entry)
 import qualified Data.Heap as Heap
 import Data.Set (Set)
 import qualified Data.Set as Set
@@ -16,7 +16,7 @@ data Move = MDown | MUp | MLeft | MRight deriving (Eq, Ord, Show)
 type Coord = (Int, Int)
 type GridMap = Set Coord
 type Path = Set Coord
-type Position = (Score, Coord, Move, Set Coord)
+type Position = Entry Score (Coord, Move, Set Coord)
 type Queue = Heap Position
 type Score = Int
 
@@ -24,7 +24,7 @@ type Score = Int
 part2 :: String -> Int
 part2 input =
   let grid = parse input
-      initPos = (0, gridStart grid, MRight, Set.empty)
+      initPos = Heap.Entry 0 (gridStart grid, MRight, Set.empty)
       allPathes = traverseGrid initPos Heap.empty [] Set.empty 999999 grid
       tiles = foldr Set.union Set.empty allPathes
    in Set.size tiles
@@ -36,7 +36,7 @@ traverseGrid :: Position          -- current position
              -> Score             -- min score
              -> Grid              -- grid
              -> [Path]
-traverseGrid (score, pos, dir, path) queue acc visited minScore grid =
+traverseGrid (Heap.Entry score (pos, dir, path)) queue acc visited minScore grid =
   if pos == gridFinish grid 
   then
     let path' = Set.insert pos path
@@ -66,8 +66,8 @@ traverseGrid (score, pos, dir, path) queue acc visited minScore grid =
       where
         inGrid = \(p,_) ->  p `Set.member` gridMap grid
         notVisited = \n -> n `Set.notMember` visited
-        toPos = \(p,d) -> (incScore d, p, d, (Set.insert pos path))
-        byScore = \(s,_,_,_) -> s <= minScore
+        toPos = \(p,d) -> Heap.Entry (incScore d) (p, d, (Set.insert pos path))
+        byScore = \(Heap.Entry score _payload) -> score <= minScore
 
     incScore :: Move -> Score
     incScore newDir

@@ -2,6 +2,7 @@
 module Day16Part1 (part1) where
 
 import qualified Data.Set as Set
+import Data.Heap (Heap, Entry)
 import qualified Data.Heap as Heap
 
 data Grid = Grid
@@ -13,26 +14,25 @@ data Grid = Grid
 data Move = MDown | MUp | MLeft | MRight deriving (Eq, Ord, Show)
 type Coord = (Int, Int)
 type GridMap = Set.Set Coord
-type Position = (Int, Coord, Move)
-type Queue = Heap.Heap Position
+type Position = Entry Int (Coord, Move)
+type Queue = Heap Position
 
 -- Returns the lowers posible score.
 part1 :: String -> Int
 part1 input =
   let grid = parse input
-   in traverseGrid 0 (0, start grid, MRight) Heap.empty Set.empty grid
+      initPos = Heap.Entry 0 (start grid, MRight)
+   in traverseGrid 0 initPos Heap.empty Set.empty grid
 
 traverseGrid :: Int -> Position -> Queue -> Set.Set Coord -> Grid -> Int
-traverseGrid n (score, pos, dir) queue visited grid =
+traverseGrid n (Heap.Entry score (pos, dir)) queue visited grid =
   case pos == finish grid of
     True -> score
     False ->
-      let next = getAdjacent pos
-          visited' = Set.insert pos visited
-          queue' = foldr Heap.insert queue next
-          nextPos = Heap.minimum queue'
-          nextQueue = Heap.deleteMin queue'
-       in traverseGrid (n+1) nextPos nextQueue visited' grid
+      let visited' = Set.insert pos visited
+          newQueue = foldr Heap.insert queue $ getAdjacent pos
+          Just (pos', queue') = Heap.viewMin newQueue
+       in traverseGrid (n + 1) pos' queue' visited' grid
   where
     getAdjacent :: Coord -> [Position]
     getAdjacent (x,y) =
@@ -43,7 +43,7 @@ traverseGrid n (score, pos, dir) queue visited grid =
                ]
        in addScore . filterNotVisited . filterInGrid $ ns
       where
-        addScore = map (\(p, d) -> (incScore d, p, d))
+        addScore = map (\(p, d) -> Heap.Entry (incScore d) (p, d))
         filterInGrid = filter (\(p, _) -> Set.member p $ gridMap grid)
         filterNotVisited = filter (\(p, _) -> Set.notMember p visited)
 
