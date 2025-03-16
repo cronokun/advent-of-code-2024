@@ -5,8 +5,8 @@ cabal-version: 2.2
 -- see: https://github.com/sol/hpack
 
 name:           adventofcode2024
-version:        0.17.2.0
-description:    Please see the README on GitHub at <https://github.com/cronokun/advent-of-code-2024#readme>
+version:        0.18.1.0
+description:    Solutions for Advent of Code 2024.
 homepage:       https://github.com/cronokun/advent-of-code-2024#readme
 bug-reports:    https://github.com/cronokun/advent-of-code-2024/issues
 author:         Crono
@@ -25,14 +25,6 @@ source-repository head
 library
   exposed-modules:
       Day1
-      Day2
-      Day3
-      Day4
-      Day5
-      Day6
-      Day7
-      Day8
-      Day9
       Day10
       Day11
       Day12
@@ -44,6 +36,15 @@ library
       Day16Part1
       Day16Part2
       Day17
+      Day18
+      Day2
+      Day3
+      Day4
+      Day5
+      Day6
+      Day7
+      Day8
+      Day9
       Helpers
   other-modules:
       Paths_adventofcode2024
@@ -62,6 +63,15 @@ test-suite adventofcode2024-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Day10Spec
+      Day11Spec
+      Day12Spec
+      Day13Spec
+      Day14Spec
+      Day15Spec
+      Day16Spec
+      Day17Spec
+      Day18Spec
       Day1Spec
       Day2Spec
       Day3Spec
@@ -71,14 +81,6 @@ test-suite adventofcode2024-test
       Day7Spec
       Day8Spec
       Day9Spec
-      Day10Spec
-      Day11Spec
-      Day12Spec
-      Day13Spec
-      Day14Spec
-      Day15Spec
-      Day16Spec
-      Day17Spec
       Paths_adventofcode2024
   autogen-modules:
       Paths_adventofcode2024
