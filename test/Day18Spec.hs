@@ -36,7 +36,15 @@ spec = do
     it "returns minimum number of steps needed to reach the exit" $ do
       (part1 example 12 (6,6)) `shouldBe` 22
 
+  describe "part 2" $ do
+    it "returns the coordinates of block that makes the exit unreachable" $ do
+      (part2 example (6,6)) `shouldBe` (6,1)
+
   describe "answers" $ do
     it "for part 1" $ do
       input <- readFile "inputs/18_list_of_bytes"
       (part1 input 1024 (70,70)) `shouldBe` 260
+
+    it "for part 2" $ do
+      input <- readFile "inputs/18_list_of_bytes"
+      (part2 input (70,70)) `shouldBe` (24,48)

@@ -1,8 +1,9 @@
 -- Day 18: RAM Run
-module Day18 (part1) where
+module Day18 (part1, part2) where
 
 import Data.Heap (Heap)
 import qualified Data.Heap as Heap
+import Data.Maybe (fromJust)
 import Data.Set (Set)
 import qualified Data.Set as Set
 import Helpers (splitOn)
@@ -16,19 +17,35 @@ type QueueEntry = Heap.Entry Int (Coord, [Coord])
 part1 :: String -> Int -> Coord -> Int
 part1 input n goal =
   let tiles = Set.fromList . take n . parse $ input
-   in traverseGrid tiles goal
+   in length . fromJust $ traverseGrid tiles goal
 
-traverseGrid :: Tiles -> Coord -> Int
-traverseGrid tiles goal@(mx, my) = traverse' (Heap.Entry 0 ((0,0), [])) Heap.empty Set.empty
+-- Returns the coordinates of block that makes the exit unreachable.
+part2 :: String -> Coord -> Coord
+part2 input goal = traverseUntilCant (parse input) Set.empty []
+ where
+   traverseUntilCant :: [Coord] -> Set Coord -> [Coord] -> Coord
+   traverseUntilCant (x : xs) tiles path
+     | null path || x `elem` path =
+       let tiles' = Set.insert x tiles
+        in case traverseGrid tiles' goal of
+             Just path' -> traverseUntilCant xs tiles' path'
+             Nothing -> x
+     | otherwise = traverseUntilCant xs (Set.insert x tiles) path
+
+traverseGrid :: Tiles -> Coord -> Maybe [Coord]
+traverseGrid tiles goal@(mx, my) =
+  let start = (Heap.Entry 0 ((0,0), []))
+   in traverse' start Heap.empty Set.empty
   where
-    traverse' :: QueueEntry -> Queue -> Set Coord -> Int
-    traverse' (Heap.Entry cost current@(coord, _path)) queue visited
-      | coord == goal = cost
+    traverse' :: QueueEntry -> Queue -> Set Coord -> Maybe [Coord]
+    traverse' (Heap.Entry cost (coord, path)) queue visited
+      | coord == goal = Just path
       | otherwise =
         let visited' = Set.insert coord visited
-            newQueue = foldr (Heap.insert) queue $ neighbours current visited
-            Just (next, queue') = Heap.viewMin newQueue
-          in traverse' next queue' visited'
+            newQueue = foldr (Heap.insert) queue $ neighbours (coord, path) visited
+         in case Heap.viewMin newQueue of
+            Just (next, queue') -> traverse' next queue' visited'
+            Nothing -> Nothing
 
     neighbours :: (Coord, [Coord]) -> Set Coord -> [QueueEntry]
     neighbours ((x, y), path) visited =
@@ -50,13 +67,3 @@ parse :: String -> [Coord]
 parse input = map toCoord $ lines input
   where
     toCoord l = let [a,b] = splitOn ',' l in (read a :: Int, read b :: Int)
-
---- DEBUG:
-
-printGrid (mx,my) tiles = helper (0, 0) ""
-  where
-    helper c@(x, y) acc
-      | x == mx && y == my = reverse (charFor c : acc)
-      | x == mx = helper (0, y + 1) ('\n' : charFor c : acc)
-      | otherwise = helper (x + 1, y) (charFor c : acc)
-    charFor c = if c `Set.member` tiles then '#' else '.'
