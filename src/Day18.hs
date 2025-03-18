@@ -14,23 +14,28 @@ type Queue = Heap QueueEntry
 type QueueEntry = Heap.Entry Int (Coord, [Coord])
 
 -- Returns minimum number of steps needed to reach the exit.
-part1 :: String -> Int -> Coord -> Int
-part1 input n goal =
-  let tiles = Set.fromList . take n . parse $ input
-   in length . fromJust $ traverseGrid tiles goal
+part1 :: String -> Int -> Int
+part1 input n =
+  let tiles = parse input
+      goal = getGoal tiles
+      blocks = Set.fromList . take n $ tiles
+   in length . fromJust $ traverseGrid blocks goal
 
 -- Returns the coordinates of block that makes the exit unreachable.
-part2 :: String -> Coord -> Coord
-part2 input goal = traverseUntilCant (parse input) Set.empty []
+part2 :: String -> Coord
+part2 input =
+  let tiles = parse input
+      goal = getGoal tiles
+  in traverseUntilCant (parse input) Set.empty [] goal
  where
-   traverseUntilCant :: [Coord] -> Set Coord -> [Coord] -> Coord
-   traverseUntilCant (x : xs) tiles path
+   traverseUntilCant :: [Coord] -> Set Coord -> [Coord] -> Coord -> Coord
+   traverseUntilCant (x : xs) tiles path goal
      | null path || x `elem` path =
        let tiles' = Set.insert x tiles
         in case traverseGrid tiles' goal of
-             Just path' -> traverseUntilCant xs tiles' path'
+             Just path' -> traverseUntilCant xs tiles' path' goal
              Nothing -> x
-     | otherwise = traverseUntilCant xs (Set.insert x tiles) path
+     | otherwise = traverseUntilCant xs (Set.insert x tiles) path goal
 
 traverseGrid :: Tiles -> Coord -> Maybe [Coord]
 traverseGrid tiles goal@(mx, my) =
@@ -67,3 +72,6 @@ parse :: String -> [Coord]
 parse input = map toCoord $ lines input
   where
     toCoord l = let [a,b] = splitOn ',' l in (read a :: Int, read b :: Int)
+
+getGoal :: [Coord] -> Coord
+getGoal = foldl (\(x, y) (x', y') -> (max x x', max y y')) (0, 0)
