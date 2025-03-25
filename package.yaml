@@ -1,5 +1,5 @@
 name:                adventofcode2024
-version:             0.19.1.0
+version:             0.19.2.1
 github:              "cronokun/advent-of-code-2024"
 license:             BSD-3-Clause
 author:              "Crono"
@@ -17,7 +17,6 @@ description:         "Solutions for Advent of Code 2024."
 dependencies:
 - base >= 4.7 && < 5
 - containers >= 0.7
-- text
 - heaps >= 0.4
 
 ghc-options:

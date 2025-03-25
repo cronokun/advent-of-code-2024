@@ -5,7 +5,7 @@ cabal-version: 2.2
 -- see: https://github.com/sol/hpack
 
 name:           adventofcode2024
-version:        0.19.1.0
+version:        0.19.2.1
 description:    Solutions for Advent of Code 2024.
 homepage:       https://github.com/cronokun/advent-of-code-2024#readme
 bug-reports:    https://github.com/cronokun/advent-of-code-2024/issues
@@ -57,7 +57,6 @@ library
       base >=4.7 && <5
     , containers >=0.7
     , heaps >=0.4
-    , text
   default-language: GHC2024
 
 test-suite adventofcode2024-test
@@ -96,5 +95,4 @@ test-suite adventofcode2024-test
     , containers >=0.7
     , heaps >=0.4
     , hspec >=2.11
-    , text
   default-language: GHC2024
