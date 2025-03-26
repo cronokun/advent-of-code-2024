@@ -6,7 +6,7 @@ module Day19 (part1, part2) where
 import Data.Maybe (fromJust, isJust)
 import qualified Data.List as L
 import qualified Data.Map as M
-import Helpers (lineGroups)
+import Helpers (lineGroups, splitOnL)
 
 -- Returns number of possible towel designs.
 part1 :: String -> Int
@@ -50,5 +50,5 @@ part2 input =
 parse :: String -> ([String], [String])
 parse input =
   let [[ps], designs] = lineGroups input
-      patterns = map (L.delete ',') $ words ps
+      patterns = splitOnL ", " ps
    in (patterns, designs)

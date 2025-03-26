@@ -1,6 +1,12 @@
-module Helpers (charToInt, inspect, lineGroups, splitOn) where
+module Helpers ( charToInt
+               , inspect
+               , lineGroups
+               , splitOn
+               , splitOnL
+               ) where
 
 import Debug.Trace (trace)
+import qualified Data.List as L
 
 inspect :: Show a => String -> a -> a
 inspect msg res = trace (msg ++ ": " ++ show res) res
@@ -13,6 +19,15 @@ splitOn p str = doSplit [] [] str
     doSplit as acc (x:xs)
       | p == x = doSplit [] ((reverse as) : acc) xs
       | otherwise = doSplit (x:as) acc xs
+
+splitOnL :: String -> String -> [String]
+splitOnL pattern str = helper [] [] str
+  where
+    helper acc as [] = reverse (reverse as : acc)
+    helper acc as s@(x : xs) =
+      case L.stripPrefix pattern s of
+        Just xs' -> helper ((reverse as) : acc) [] xs'
+        Nothing -> helper acc (x : as) xs
 
 -- Split a string into groups of strings.
 lineGroups :: String -> [[String]]
