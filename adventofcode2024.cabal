@@ -5,7 +5,7 @@ cabal-version: 2.2
 -- see: https://github.com/sol/hpack
 
 name:           adventofcode2024
-version:        0.19.2.1
+version:        0.20.1.0
 description:    Solutions for Advent of Code 2024.
 homepage:       https://github.com/cronokun/advent-of-code-2024#readme
 bug-reports:    https://github.com/cronokun/advent-of-code-2024/issues
@@ -38,6 +38,7 @@ library
       Day18
       Day19
       Day2
+      Day20
       Day3
       Day4
       Day5
@@ -74,6 +75,7 @@ test-suite adventofcode2024-test
       Day18Spec
       Day19Spec
       Day1Spec
+      Day20Spec
       Day2Spec
       Day3Spec
       Day4Spec
