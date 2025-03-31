@@ -1,9 +1,10 @@
 -- Day 20: Race Condition
-module Day20 (part1) where
+module Day20 (part1, part2) where
 
 import qualified Data.List as L
 import qualified Data.Set as S
 
+type Cheat = (Coord, Coord, Int, Int)
 type Coord = (Int, Int)
 type Path = [(Coord, Int)]
 
@@ -13,12 +14,19 @@ data Racetrack = Racetrack
   , rFinish :: Coord
   } deriving (Show)
 
--- Returns how many cheats would save you at least N picoseconds.
+-- Returns how many 2-picosec cheats would save you at least N picoseconds.
 part1 :: String -> Int -> Int
-part1 input n =
+part1 input n = helper input 2 n
+
+-- Returns how many 20-picosec cheats would save you at least N picoseconds.
+part2 :: String -> Int -> Int
+part2 input n = helper input 20 n
+
+helper :: String -> Int -> Int -> Int
+helper input clen n =
   let track = parse input
       path = traverseTrack track
-      cheats = allCheats path (>= n)
+      cheats = findCheats path clen n
    in length cheats
 
 traverseTrack :: Racetrack -> Path
@@ -38,27 +46,17 @@ traverseTrack track = helper (rStart track) (rStart track) 0 []
 
     inGrid tile = S.member tile $ rTiles track
 
-allCheats :: Path -> (Int -> Bool) -> [Int]
-allCheats path p = foldl (\acc x -> acc <> saves x) [] $ map fst path
+findCheats :: Path -> Int -> Int -> [Cheat]
+findCheats path len n =
+  [ (a, b, dist, saveDist)
+    | ((a, d1), i) <- zip path [1..]
+  , (b, d2) <- drop i path
+  , let dist = cheatDist a b
+  , let saveDist = d2 - d1 - dist
+  , dist >= 2, dist <= len, saveDist > 0, saveDist >= n
+  ]
   where
-    saves c@(x, y) =
-      let xs = [ ((x + 1, y), (x + 2, y))
-               , ((x - 1, y), (x - 2, y))
-               , ((x, y + 1), (x, y + 2))
-               , ((x, y - 1), (x, y - 2))
-               ]
-          cs = map snd . filter (uncurry isCheat) $ xs
-       in filter p $ map (savedDist c) cs
-
-    isCheat c1 c2 = isWall c1 && isPath c2
-    isPath = flip S.member pathTiles
-    isWall = not . isPath
-    pathTiles = S.fromList $ map fst path
-
-    savedDist c c' =
-      let Just d1 = L.lookup c path
-          Just d2 = L.lookup c' path
-       in d2 - d1 - 2
+    cheatDist (x1,y1) (x2,y2) = abs (x2 - x1) + abs (y2 - y1)
 
 parse :: String -> Racetrack
 parse input =
