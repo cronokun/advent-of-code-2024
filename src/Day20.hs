@@ -1,3 +1,5 @@
+{-# LANGUAGE RecordWildCards #-}
+
 -- Day 20: Race Condition
 module Day20 (part1, part2) where
 
@@ -30,11 +32,11 @@ helper input clen n =
    in length cheats
 
 traverseTrack :: Racetrack -> Path
-traverseTrack track = helper (rStart track) (rStart track) 0 []
+traverseTrack Racetrack {..} = helper rStart rStart 0 []
   where
     helper :: Coord -> Coord -> Int -> Path -> Path
     helper tile@(x,y) prev dist path
-      | tile == rFinish track = reverse ((tile, dist) : path)
+      | tile == rFinish = reverse ((tile, dist) : path)
       | otherwise =
         let next = nextTile tile prev
             path' = (tile, dist) : path
@@ -44,7 +46,7 @@ traverseTrack track = helper (rStart track) (rStart track) 0 []
       let xs = [(x + 1, y), (x - 1, y), (x, y + 1), (x, (y - 1))]
        in head . filter (/= prev) . filter inGrid $ xs
 
-    inGrid tile = S.member tile $ rTiles track
+    inGrid tile = S.member tile $ rTiles
 
 findCheats :: Path -> Int -> Int -> [Cheat]
 findCheats path len n =
