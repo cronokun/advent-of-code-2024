@@ -49,8 +49,8 @@ traverseTrack track = helper (rStart track) (rStart track) 0 []
 findCheats :: Path -> Int -> Int -> [Cheat]
 findCheats path len n =
   [ (a, b, dist, saveDist)
-    | ((a, d1), i) <- zip path [1..]
-  , (b, d2) <- drop i path
+  | ((a, d1) : xs) <- L.tails path
+  , (b, d2) <- xs
   , let dist = cheatDist a b
   , let saveDist = d2 - d1 - dist
   , dist >= 2, dist <= len, saveDist > 0, saveDist >= n
