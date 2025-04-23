@@ -1,6 +1,7 @@
 module Helpers ( charToInt
                , inspect
                , lineGroups
+               , splitAtC
                , splitOn
                , splitOnL
                ) where
@@ -10,6 +11,15 @@ import qualified Data.List as L
 
 inspect :: Show a => String -> a -> a
 inspect msg res = trace (msg ++ ": " ++ show res) res
+
+splitAtC :: Char -> String -> [String]
+splitAtC p str = run [] "" str
+  where
+    run acc "" [] = reverse acc
+    run acc wacc [] = reverse (wacc : acc)
+    run acc wacc (x:xs)
+      | x == p = run ((wacc <> [p]) : acc) [] xs
+      | otherwise = run acc (wacc <> [x]) xs
 
 -- Split a string into two on the specified char.
 splitOn :: Char -> String -> [String]
