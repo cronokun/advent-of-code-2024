@@ -30,7 +30,7 @@ ghc-options:
 - -Wpartial-fields
 - -Wredundant-constraints
 
-default-language: GHC2024
+language: GHC2024
 
 library:
   source-dirs: src
@@ -40,6 +40,7 @@ tests:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
+    - -O2
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
