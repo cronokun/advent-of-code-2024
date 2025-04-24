@@ -5,7 +5,7 @@ cabal-version: 2.2
 -- see: https://github.com/sol/hpack
 
 name:           adventofcode2024
-version:        0.22.1.0
+version:        0.22.2.1
 description:    Solutions for Advent of Code 2024.
 homepage:       https://github.com/cronokun/advent-of-code-2024#readme
 bug-reports:    https://github.com/cronokun/advent-of-code-2024/issues
