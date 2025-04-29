@@ -44,8 +44,8 @@ spec = do
       part1 example `shouldBe` 7
 
   describe "part2" $ do
-    it "TBD" $ do
-      part2 example `shouldBe` 0
+    it "returns password to get into the LAN party" $ do
+      part2 example `shouldBe` "co,de,ka,ta"
 
   describe "answers" $ do
     it "for part 1" $ do
@@ -54,4 +54,4 @@ spec = do
 
     it "for part 2" $ do
       input <- readFile "inputs/23_local_network_map"
-      part2 input `shouldBe` 0
+      part2 input `shouldBe` "ad,jw,kt,kz,mt,nc,nr,sb,so,tg,vs,wh,yh"
