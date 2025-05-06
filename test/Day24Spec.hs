@@ -1,7 +1,7 @@
 module Day24Spec (spec) where
 
 import Day24
-import Test.Hspec hiding (example)
+import Test.Hspec
 
 example1, example2 :: String
 
@@ -71,10 +71,6 @@ spec = do
       part1 example1 `shouldBe` 4
       part1 example2 `shouldBe` 2024
 
-  describe "part2" $ do
-    it "TBD" $ do
-      part2 example2 `shouldBe` 0
-
   describe "answers" $ do
     it "for part 1" $ do
       input <- readFile "inputs/24_wires"
@@ -82,4 +78,4 @@ spec = do
 
     it "for part 2" $ do
       input <- readFile "inputs/24_wires"
-      part2 input `shouldBe` 0
+      part2 input `shouldBe` "hjf,kdh,kpp,sgj,vss,z14,z31,z35"
