@@ -1,6 +1,7 @@
 module Helpers ( charToInt
                , inspect
                , lineGroups
+               , replace
                , splitAtC
                , splitOn
                , splitOnL
@@ -38,6 +39,13 @@ splitOnL pattern str = helper [] [] str
       case L.stripPrefix pattern s of
         Just xs' -> helper ((reverse as) : acc) [] xs'
         Nothing -> helper acc (x : as) xs
+
+replace :: String -> String -> String -> String
+replace p r str = run [] str
+  where run acc [] = acc
+        run acc xs
+          | p `L.isPrefixOf` str = run (acc <> r) (drop (length p) xs)
+          | otherwise = run (acc <> take 1 xs) (drop 1 xs)
 
 -- Split a string into groups of strings.
 lineGroups :: String -> [[String]]

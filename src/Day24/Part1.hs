@@ -1,5 +1,5 @@
 -- Day 24: Crossed Wires
-module Day24 (part1, part2) where
+module Day24.Part1 (part1) where
 
 import Data.Map (Map)
 import qualified Data.Map as M
@@ -28,14 +28,6 @@ part1 input =
       zs = getWires d "z"
   in toDecimal zs
 
--- FIXME: Add preper solution?
--- How I solved it: use `testFullAdder` to test gates from 1 to 44.
--- For each failed gate find the pair of crossed wires (did this by hand).
---
--- Returns all pairs of swapped gates.
-part2 :: String -> String
-part2 _input = "hjf,kdh,kpp,sgj,vss,z14,z31,z35"
-
 run :: Device -> Device
 run Device { connections = cs, wires = w } =
   let w' = foldr (\c s -> snd $ doRun c s) w cs
@@ -62,6 +54,41 @@ run Device { connections = cs, wires = w } =
     op OR a b = a || b
     op XOR a b = a /= b
 
+getWires :: Device -> String -> [Bool]
+getWires d p = M.elems . M.filterWithKey (\k _ -> p `L.isPrefixOf` k) $ (wires d)
+
+toDecimal :: [Bool] -> Int
+toDecimal = run 0 0
+  where run acc _ [] = acc
+        run acc n (True : xs) = run (acc + 2^n) (n + 1) xs
+        run acc n (False : xs) = run acc (n + 1) xs
+
+parse :: String -> Device
+parse input =
+  let [as, bs] = lineGroups input
+      vals = M.fromList $ map parseVal as
+      cons = map parseCon bs
+   in Device { connections = cons, wires = vals }
+  where
+    parseCon :: String -> Connection
+    parseCon str =
+      let [a, b, c, "->", d] = words str
+          gate = case b of
+                   "AND" -> AND
+                   "OR" -> OR
+                   "XOR" -> XOR
+       in Connection { gate = gate, input = (a, c), output = d }
+
+    parseVal :: String -> (String, Bool)
+    parseVal str =
+      let [name, v] = splitOnL ": " str
+          val = case v of
+                  "1" -> True
+                  "0" -> False
+       in (name, val)
+
+---- START
+-- FIXME: Unsused code for Part 2; delete.
 testHalfAdder :: Device -> Int -> [String]
 testHalfAdder (Device { connections = cs }) n =
   let x = gateName "x" n
@@ -103,36 +130,4 @@ gateName s n = s <> (padLeft 2 '0' $ show n)
 
 toBin :: [Bool] -> String
 toBin xs = concatMap (\x -> if x then "1" else "0") . reverse $ xs
-
-toDecimal :: [Bool] -> Int
-toDecimal = run 0 0
-  where run acc _ [] = acc
-        run acc n (True : xs) = run (acc + 2^n) (n + 1) xs
-        run acc n (False : xs) = run acc (n + 1) xs
-
-getWires :: Device -> String -> [Bool]
-getWires d p = M.elems . M.filterWithKey (\k _ -> p `L.isPrefixOf` k) $ (wires d)
-
-parse :: String -> Device
-parse input =
-  let [as, bs] = lineGroups input
-      vals = M.fromList $ map parseVal as
-      cons = map parseCon bs
-   in Device { connections = cons, wires = vals }
-  where
-    parseCon :: String -> Connection
-    parseCon str =
-      let [a, b, c, "->", d] = words str
-          gate = case b of
-                   "AND" -> AND
-                   "OR" -> OR
-                   "XOR" -> XOR
-       in Connection { gate = gate, input = (a, c), output = d }
-
-    parseVal :: String -> (String, Bool)
-    parseVal str =
-      let [name, v] = splitOnL ": " str
-          val = case v of
-                  "1" -> True
-                  "0" -> False
-       in (name, val)
+---- END
