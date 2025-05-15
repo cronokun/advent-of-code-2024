@@ -1,5 +1,5 @@
 -- Day 24, part 2: Crossed Wires
-module Day24.Part2 where
+module Day24.Part2 (part2) where
 
 import qualified Data.List as L
 import Data.Maybe (isJust)

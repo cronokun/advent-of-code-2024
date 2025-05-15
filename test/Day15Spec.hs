@@ -1,7 +1,7 @@
 module Day15Spec (spec) where
 
-import Day15Part1
-import Day15Part2
+import Day15.Part1
+import Day15.Part2
 import Test.Hspec
 
 example1, example2, example3 :: String

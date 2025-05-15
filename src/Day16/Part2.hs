@@ -1,5 +1,5 @@
 -- Day 16, part 2: Reindeer Maze
-module Day16Part2 (part2) where
+module Day16.Part2 (part2) where
 
 import Data.Heap (Heap, Entry)
 import qualified Data.Heap as Heap
@@ -37,7 +37,7 @@ traverseGrid :: Position          -- current position
              -> Grid              -- grid
              -> [Path]
 traverseGrid (Heap.Entry score (pos, dir, path)) queue acc visited minScore grid =
-  if pos == gridFinish grid 
+  if pos == gridFinish grid
   then
     let path' = Set.insert pos path
         acc' = (path' : acc)

@@ -1,5 +1,5 @@
 -- Day 16, part 1: Reindeer Maze
-module Day16Part1 (part1) where
+module Day16.Part1 (part1) where
 
 import qualified Data.Set as Set
 import Data.Heap (Heap, Entry)

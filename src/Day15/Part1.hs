@@ -1,5 +1,5 @@
 -- Day 15, part1: Warehouse Woes
-module Day15Part1 (part1) where
+module Day15.Part1 (part1) where
 
 import Data.List (find, partition, sort, sortBy)
 import Helpers (lineGroups)
@@ -50,7 +50,7 @@ maybeMoveBoxes :: Move -> Coord -> Grid -> Maybe [Coord]
 maybeMoveBoxes dir pos grid =
   let wp = getClosestWall dir pos grid
       (bs, rest) = getClosestBoxes dir pos wp grid
-      boxesToMove = sortByDir dir bs 
+      boxesToMove = sortByDir dir bs
    in case tryMove dir pos wp boxesToMove of
         Just (moved, rest') ->
           Just (concat [moved, rest', rest])
@@ -108,7 +108,7 @@ getClosestWall dir (rx, ry) grid =
             MoveLeft  -> (\(x,y) -> rx > x && ry == y)
             MoveRight -> (\(x,y) -> rx < x && ry == y)
       (Just pos') = find p . sortByDir dir . walls $ grid
-   in pos' 
+   in pos'
 
 parse :: String -> (Grid, [Move])
 parse input =

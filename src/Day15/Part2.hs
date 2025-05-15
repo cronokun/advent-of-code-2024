@@ -1,5 +1,5 @@
 -- Day 15, part 2: Bigger Warehouse Woes
-module Day15Part2 (part2) where
+module Day15.Part2 (part2) where
 
 import Helpers (lineGroups)
 import Data.List (find, nub)
@@ -95,7 +95,7 @@ maybeBox grid (x,y)
   | Set.member b1 boxes' = Just b1
   | Set.member b2 boxes' = Just b2
   | otherwise = Nothing
-  where 
+  where
     b1 = ((x, y), (x + 1, y))
     b2 = ((x - 1, y), (x, y))
     boxes' = boxes grid
@@ -153,4 +153,3 @@ parse input =
       'v' -> MoveDown
       '<' -> MoveLeft
       '>' -> MoveRight
-
